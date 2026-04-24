@@ -41,7 +41,9 @@ public class LibroService {
     }
 
 
-
+    public List<Libro> selectEditorial (String editorial) {
+        return libroRepository.selectEditorial(editorial);
+    }
 
 
 

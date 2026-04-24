@@ -77,4 +77,11 @@ public class LibroController {
                 int total = libroService.totalLibrosV2();
                 return ResponseEntity.ok(total);
         }
+
+
+        @GetMapping("/editorial/{editorial}")
+        public List<Libro> selectEditorial (@PathVariable String editorial){
+                return libroService.selectEditorial(editorial);
+
+        }
 }
