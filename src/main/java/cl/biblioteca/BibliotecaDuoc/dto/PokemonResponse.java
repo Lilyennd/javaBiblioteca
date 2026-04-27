@@ -3,6 +3,7 @@ package cl.biblioteca.BibliotecaDuoc.dto;
 public class PokemonResponse {
      private Long id;
     private String name;
+    private int capture_rate;
  
  
     private Boolean is_legendary;
@@ -36,4 +37,12 @@ public class PokemonResponse {
     public void setIs_legendary(Boolean isLegendary) {
         this.is_legendary = isLegendary;
     }
+
+    public int getCapture_rate (){
+        return capture_rate;
+    }
+    public int setCapture_rate ( int capture_rate) {
+        return this.capture_rate = capture_rate;
+    }
+
 }

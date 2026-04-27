@@ -33,7 +33,7 @@ public class LibroController {
         // Constructor injection (mejor práctica 2026)
         public LibroController(LibroService libroService, WebClient pokeApiWebClient ) {
                 this.libroService = libroService;
-                this.pokeApiWebClient = null;
+                this.pokeApiWebClient = pokeApiWebClient;
         }
 
         @GetMapping
