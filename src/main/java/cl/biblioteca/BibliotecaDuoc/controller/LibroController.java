@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import cl.biblioteca.BibliotecaDuoc.dto.CreateLibroRequest;
+import cl.biblioteca.BibliotecaDuoc.dto.PokemonResponse;
 import cl.biblioteca.BibliotecaDuoc.dto.UpdateLibroRequest;
 import cl.biblioteca.BibliotecaDuoc.exception.ResourceNotFoundException;
 import cl.biblioteca.BibliotecaDuoc.mapper.LibroMapper;
@@ -25,10 +28,12 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/libros")
 public class LibroController {
     private final LibroService libroService;
+    private final WebClient pokeApiWebClient;
 
         // Constructor injection (mejor práctica 2026)
-        public LibroController(LibroService libroService) {
+        public LibroController(LibroService libroService, WebClient pokeApiWebClient ) {
                 this.libroService = libroService;
+                this.pokeApiWebClient = null;
         }
 
         @GetMapping
@@ -84,4 +89,18 @@ public class LibroController {
                 return libroService.selectEditorial(editorial);
 
         }
+
+         @GetMapping("/pokeapi")
+        public ResponseEntity<PokemonResponse> consultarPokemon(
+                        @RequestParam(name = "nombre") String nombre) {
+ 
+ 
+                PokemonResponse pokemon = pokeApiWebClient.get()
+                                .uri("/pokemon-species/{nombre}", nombre) // Endpoint más simple
+                                .retrieve().bodyToMono(PokemonResponse.class).block();
+ 
+ 
+                return ResponseEntity.ok(pokemon);
+        }
+ 
 }
